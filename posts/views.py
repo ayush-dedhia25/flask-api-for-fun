@@ -8,11 +8,7 @@ posts = Blueprint("posts", __name__, url_prefix="/posts")
 def create_post():
    if request.method == "POST":
       # Creating a user object
-      post = PostEntity(
-         title=request.form.get("title"),
-         body=request.form.get("body"),
-         user_id=request.form.get("user_id")
-      )
+      post = PostEntity(title=request.form.get("title"), body=request.form.get("body"), user_id=request.form.get("user_id"))
       
       # Committing a new user to the database
       db.session.add(post)
@@ -37,11 +33,7 @@ def find_one_post(postId):
    
    # Checking if the post exists!
    if post is None:
-      return jsonify(
-         status=404,
-         message="No post was found with the given post-id",
-         reason="Resources Unavailable"
-      )
+      return jsonify(status=404, message="No post was found with the given post-id", reason="Resources Unavailable")
    
    # Returning the post with the specific post-id
    return jsonify(status=200, post=post.to_dict())
@@ -55,11 +47,7 @@ def delete_post(postId):
    
    # If not post exists?
    if post is None:
-      return jsonify(
-         status=404,
-         message="Cannot delete post with the given post-id",
-         reason="Resources Unavailable"
-      )
+      return jsonify(status=404, message="Cannot delete post with the given post-id", reason="Resources Unavailable")
    
    # Deleting the post from the database
    db.session.delete(post)
@@ -71,13 +59,12 @@ def delete_post(postId):
 
 @posts.route("/<postid>", methods=["PUT"])
 def give_api(postid):
+   # Checking if the post exists before trying to update it
    post = PostEntity.query.get(int(postid))
+   
+   # Does post exists?
    if post is None:
-      return jsonify(
-         status=404,
-         message="Cannot delete post with the given post-id",
-         reason="Resources Unavailable"
-      )
+      return jsonify(status=404, message="Cannot delete post with the given post-id", reason="Resources Unavailable")
    
    # Updating user object
    for key, value in request.form.items():
