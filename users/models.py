@@ -18,7 +18,7 @@ class UserEntity(db.Model, SerializerMixin):
    password = db.Column(db.String(128), nullable=False)
    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
    updatedAt = db.Column(db.DateTime, onupdate=datetime.utcnow)
-   posts = db.relationship(PostEntity, backref='user', lazy=True)
+   posts = db.relationship(PostEntity, backref='user', lazy='dynamic')
    
    # String representation for self
    def __repr__(self):

@@ -18,7 +18,7 @@ class PostEntity(db.Model, SerializerMixin):
    user_id = db.Column(db.Integer, db.ForeignKey('users.userID'), nullable=False, index=True)
    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
    updatedAt = db.Column(db.DateTime, onupdate=datetime.utcnow)
-   comments = db.relationship(CommentEntity, backref='post', lazy=True)
+   comments = db.relationship(CommentEntity, backref='post', lazy='dynamic')
    
    # String representation for self
    def __repr__(self):
