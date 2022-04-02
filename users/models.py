@@ -1,13 +1,14 @@
 from datetime import datetime
 from sqlalchemy_serializer import SerializerMixin
 from ..common import database as db
+from ..posts.models import PostEntity
 
 class UserEntity(db.Model, SerializerMixin):
    # Defining table name for the database
-   __tablename__ = "users"
+   __tablename__ = 'users'
    
-   # User Serializating
-   serialize_only = ("userID", "name", "email", "createdAt", "posts")
+   # Users table Serializating
+   serialize_only = ('userID', 'name', 'email', 'createdAt', 'posts')
    serialize_rules = ()
    
    # Defining table fields
@@ -17,9 +18,9 @@ class UserEntity(db.Model, SerializerMixin):
    password = db.Column(db.String(128), nullable=False)
    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
    updatedAt = db.Column(db.DateTime, onupdate=datetime.utcnow)
-   posts = db.relationship("PostEntity", backref="user")
+   posts = db.relationship(PostEntity, backref='user', lazy=True)
    
    # String representation for self
    def __repr__(self):
-      return f"<User id={self.userID}, name='{self.name}'>"
+      return f'<User id={self.userID}, name=\'{self.name}\'>'
 

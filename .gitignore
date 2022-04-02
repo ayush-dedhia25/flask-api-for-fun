@@ -20,7 +20,8 @@ docs/_build/
 .vscode
 *.sqlite3
 *.db
-__pycache__
+*/__pycache__/
+migrations/
 
 # Coverage reports
 htmlcov/
